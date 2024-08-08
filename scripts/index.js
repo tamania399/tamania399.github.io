@@ -63,8 +63,11 @@ $(document).ready(function() {
 });
 
 var updateHeight = function() {
-    // Set a fixed height or adjust dynamically
-    $(".wrapper").height(1750);
+    var wrapperHeight = 0;
+    $(".wrapper > *").each(function() {
+        wrapperHeight += $(this).outerHeight(true); // including margins
+    });
+    $(".wrapper").height(wrapperHeight);
 }
 
 window.mobilecheck = function() {
