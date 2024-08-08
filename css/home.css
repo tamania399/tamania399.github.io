@@ -49,7 +49,7 @@ h6 {
 .fixed{
 	top:0;
 	position:fixed; 
-	height: 20% auto;
+	height: 20 auto;
 	left: 0;
   	right: 0;
   	margin: 0 auto;
