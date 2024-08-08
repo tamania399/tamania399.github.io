@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Check for mobile and adjust styles
     if (mobilecheck()) {
         $(".wrapper").css({'width': '100%'});
         $("#title").addClass('mobile');
@@ -8,29 +7,23 @@ $(document).ready(function() {
         $("#text").css({'padding-bottom': '6%'});
     }
 
-    // Sets height of wrapper to fixed divs
     updateHeight();
 
-    // Activate mosaic
     $('.bar').mosaic({
-         animation : 'slide'
+        animation : 'slide'
     });
 
-    // Navigation icon enlargements
     $("#navigation li a").on({
-        mouseenter: function(){
+        mouseenter: function() {
             $(this).children().addClass('fa-2x');
         },
-        mouseleave: function(){
+        mouseleave: function() {
             $(this).children().removeClass('fa-2x');
         }
     });
 
-    // Activate fancybox
     $(".fancybox").fancybox({
-        helpers:{ 
-            overlay:{ locked : false },
-        }
+        helpers: { overlay: { locked: false } }
     });
 
     var percent = 0.25;
@@ -39,20 +32,20 @@ $(document).ready(function() {
 
     $(window).on('scroll', function() {
         var scrollTop = $(window).scrollTop();
-        var height = $(document).height();
-        var calc = 1 - (3 * scrollTop / height);
+        var documentHeight = $(document).height();
+        var windowHeight = $(window).height();
+        var scrollableHeight = documentHeight - windowHeight;
+        var scrollPercent = scrollTop / scrollableHeight;
+        var opacity = 1 - scrollPercent * 2;
 
-        // Update title class based on scroll
-        if (calc + 0.4 < percent) {
-            title.addClass('smaller');    
-        } else if (calc >= percent) {
+        if (scrollPercent > percent) {
+            title.addClass('smaller');
+        } else {
             title.removeClass('smaller');
         }
 
-        // Update header opacity based on scroll
-        header.css({ 'opacity': Math.max(0, Math.min(1, calc)) });
+        header.css({ 'opacity': Math.max(0, Math.min(1, opacity)) });
 
-        // Update elements with scroll speed data
         $('[data-scroll-speed]').each(function() {
             var $el = $(this);
             var speed = parseInt($el.attr('data-scroll-speed'));
@@ -61,6 +54,7 @@ $(document).ready(function() {
         });
     });
 });
+
 
 var updateHeight = function() {
     var wrapperHeight = 0;
